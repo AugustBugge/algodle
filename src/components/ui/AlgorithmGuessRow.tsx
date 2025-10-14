@@ -26,7 +26,7 @@ export function AlgorithmGuessRow({ fields }: AlgorithmGuessRowProps) {
             f.state ? stateColors[f.state] : "bg-gray-100 text-gray-800"
           )}
         >
-          <div className="truncate">
+          <div className="break-words text-center">
             {f.value}{" "}
             {f.state === "better" ? (
               <ArrowUp />
