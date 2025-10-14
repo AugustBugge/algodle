@@ -7,6 +7,7 @@ import { AlgorithmGuessRow } from "./AlgorithmGuessRow";
 import { compareAlgorithms } from "@/lib/compareAlgorithms";
 import { GuessRows } from "./guessRows";
 import { Algorithm } from "@/lib/types";
+import Confetti from "react-confetti";
 
 const sampleData: Algorithm[] = [
   {
@@ -101,6 +102,7 @@ export function AlgorithmGuesser() {
 
   const [guesses, setGuesses] = useState<Algorithm[]>([]);
   const [guessedCorrect, setGuessedCorret] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
 
   const handleGuess = (guess: string) => {
     if (guessedCorrect) return;
@@ -112,11 +114,22 @@ export function AlgorithmGuesser() {
     setGuesses((prev) => (match ? [match, ...prev] : prev));
     if (isCorrect) {
       setGuessedCorret(true);
+
+      setShowConfetti(true);
+      setTimeout(() => setShowConfetti(false), 20000);
     }
     //alert(isCorrect ? "✅ Correct!" : "❌ Try again!");
   };
   return (
     <div>
+      {showConfetti && (
+        <Confetti
+          width={window.innerWidth}
+          height={window.innerHeight}
+          recycle={false}
+          numberOfPieces={500}
+        />
+      )}
       {!guessedCorrect && (
         <AlgorithmCombobox
           guess={handleGuess}
