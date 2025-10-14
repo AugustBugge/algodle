@@ -108,21 +108,28 @@ export function AlgorithmGuesser() {
     return sampleData[randomIndex];
   });
 const [guesses, setGuesses] = useState<Algorithm[]>([]);
+const [guessedCorrect, setGuessedCorret] = useState(false);
 
   const handleGuess = (guess: string) => {
+    if( guessedCorrect) return;
     const isCorrect = checkAlgorithmGuess(guess, correctAlgorithm.name);
     const match = sampleData.find(x => x.name === guess);
   setGuesses(prev => (match ? [match, ...prev] : prev));
-    alert(isCorrect ? "✅ Correct!" : "❌ Try again!");
+    if (isCorrect) {
+      setGuessedCorret(true);
+    }
+    //alert(isCorrect ? "✅ Correct!" : "❌ Try again!");
   };
   return (
-    <div><AlgorithmCombobox
+    
+    <div>
+       {!guessedCorrect && (<AlgorithmCombobox
       guess={handleGuess}
       items={sampleData.map((item) => ({
         label: item.name,
         value: item.name,
       }))}
-    />
+    />)}
     <GuessRows correct={correctAlgorithm} guesses={guesses}/>
     </div>
     
