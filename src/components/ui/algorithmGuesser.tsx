@@ -5,6 +5,7 @@ import { InputWithButton } from "@/components/ui/inputWithButton";
 import { AlgorithmCombobox } from "./algorithm-combobox";
 import { AlgorithmGuessRow } from "../AlgorithmGuessRow";
 import { compareAlgorithms } from "@/lib/compareAlgorithms";
+import { GuessRows } from "./guessRows";
 
 const sampleData = [
   {
@@ -57,16 +58,16 @@ const sampleData = [
   },
   {
     name: "Dijkstra's Algorithm",
-    Type: "Graph Algorithm (Shortest Path)",
+    Type: "Graph Algorithm",
     TimeComplexity:
-      "O(V²) with basic implementation, O(E + V log V) with priority queue",
+      "O(E + V log V)",
     SpaceComplexity: "O(V)",
     countryOfOrigin: "Netherlands",
     deterministic: "Yes",
   },
   {
     name: "Depth-First Search (DFS)",
-    Type: "Graph Traversal Algorithm",
+    Type: "Graph Algorithm",
     TimeComplexity: "O(V + E)",
     SpaceComplexity: "O(V)",
     countryOfOrigin: "United States",
@@ -74,7 +75,7 @@ const sampleData = [
   },
   {
     name: "Breadth-First Search (BFS)",
-    Type: "Graph Traversal Algorithm",
+    Type: "Graph Algorithm",
     TimeComplexity: "O(V + E)",
     SpaceComplexity: "O(V)",
     countryOfOrigin: "United States",
@@ -90,6 +91,7 @@ const categories = [
   "determanistic?",
 ];
 
+
 export function AlgorithmGuesser() {
   interface Algorithm {
     name: string;
@@ -100,15 +102,17 @@ export function AlgorithmGuesser() {
     determanistic?: string;
   }
   const fields = compareAlgorithms(sampleData[0], sampleData[1]);
-
   const [correctAlgorithm] = useState(() => {
     const randomIndex = Math.floor(Math.random() * sampleData.length);
     console.log("Chose %s", sampleData[randomIndex].name);
     return sampleData[randomIndex];
   });
+const [guesses, setGuesses] = useState<Algorithm[]>([]);
 
   const handleGuess = (guess: string) => {
     const isCorrect = checkAlgorithmGuess(guess, correctAlgorithm.name);
+    const match = sampleData.find(x => x.name === guess);
+  setGuesses(prev => (match ? [match, ...prev] : prev));
     alert(isCorrect ? "✅ Correct!" : "❌ Try again!");
   };
   return (
@@ -119,7 +123,8 @@ export function AlgorithmGuesser() {
         value: item.name,
       }))}
     />
-    <AlgorithmGuessRow fields={fields}/></div>
+    <GuessRows correct={correctAlgorithm} guesses={guesses}/>
+    </div>
     
   );
 }
