@@ -21,7 +21,7 @@ export function AlgorithmGuessRow({ fields }: AlgorithmGuessRowProps) {
   }
 
   return (
-    <div className="grid grid-cols-5 gap-2 w-full max-w-3xl">
+    <div className="grid grid-cols-6 gap-2 w-full max-w-3xl">
       {fields.map((f, i) => (
         <Card
           key={i}

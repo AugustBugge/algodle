@@ -7,8 +7,8 @@ import { compareAlgorithms } from "@/lib/compareAlgorithms"
 
 export interface Algorithm {
   name: string
-  Type: string
-  TimeComplexity: string
+  type: string
+  timeComplexity: string
   spaceComplexity?: string
   countryOfOrigin: string
   determanistic?: string // keeping your original spelling

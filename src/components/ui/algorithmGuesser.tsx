@@ -10,76 +10,76 @@ import { GuessRows } from "./guessRows";
 const sampleData = [
   {
     name: "Quicksort",
-    Type: "Sorting Algorithm",
-    TimeComplexity: "Nlog(N)",
+    type: "Sorting Algorithm",
+    timeComplexity: "Nlog(N)",
     spaceComplexity: "O(log N)",
     countryOfOrigin: "Great Britain",
     determanistic: "No",
   },
   {
     name: "Merge Sort",
-    Type: "Sorting Algorithm",
-    TimeComplexity: "Nlog(N)",
+    type: "Sorting Algorithm",
+    timeComplexity: "Nlog(N)",
     spaceComplexity: "O(N)",
     countryOfOrigin: "United States",
     determanistic: "Yes",
   },
   {
     name: "Bubble Sort",
-    Type: "Sorting Algorithm",
-    TimeComplexity: "N²",
+    type: "Sorting Algorithm",
+    timeComplexity: "N²",
     spaceComplexity: "O(1)",
     countryOfOrigin: "United States",
     determanistic: "Yes",
   },
   {
     name: "Heap Sort",
-    Type: "Sorting Algorithm",
-    TimeComplexity: "Nlog(N)",
+    type: "Sorting Algorithm",
+    timeComplexity: "Nlog(N)",
     spaceComplexity: "O(1)",
     countryOfOrigin: "United States",
     determanistic: "Yes",
   },
   {
     name: "Insertion Sort",
-    Type: "Sorting Algorithm",
-    TimeComplexity: "N²",
+    type: "Sorting Algorithm",
+    timeComplexity: "N²",
     spaceComplexity: "O(1)",
     countryOfOrigin: "United States",
     determanistic: "Yes",
   },
   {
     name: "Binary Search",
-    Type: "Search Algorithm",
-    TimeComplexity: "O(log n)",
-    SpaceComplexity: "O(1)",
+    type: "Search Algorithm",
+    timeComplexity: "O(log n)",
+    spaceComplexity: "O(1)",
     countryOfOrigin: "United States",
-    deterministic: "Yes",
+    determanistic: "Yes",
   },
   {
     name: "Dijkstra's Algorithm",
-    Type: "Graph Algorithm",
-    TimeComplexity:
+    type: "Graph Algorithm",
+    timeComplexity:
       "O(E + V log V)",
-    SpaceComplexity: "O(V)",
+    spaceComplexity: "O(V)",
     countryOfOrigin: "Netherlands",
-    deterministic: "Yes",
+    determanistic: "Yes",
   },
   {
     name: "Depth-First Search (DFS)",
-    Type: "Graph Algorithm",
-    TimeComplexity: "O(V + E)",
-    SpaceComplexity: "O(V)",
+    type: "Graph Algorithm",
+    timeComplexity: "O(V + E)",
+    spaceComplexity: "O(V)",
     countryOfOrigin: "United States",
-    deterministic: "Yes",
+    determanistic: "Yes",
   },
   {
     name: "Breadth-First Search (BFS)",
-    Type: "Graph Algorithm",
-    TimeComplexity: "O(V + E)",
-    SpaceComplexity: "O(V)",
+    type: "Graph Algorithm",
+    timeComplexity: "O(V + E)",
+    spaceComplexity: "O(V)",
     countryOfOrigin: "United States",
-    deterministic: "Yes",
+    determanistic: "Yes",
   },
 ];
 
@@ -95,13 +95,13 @@ const categories = [
 export function AlgorithmGuesser() {
   interface Algorithm {
     name: string;
-    Type: string;
-    TimeComplexity: string;
+    type: string;
+    timeComplexity: string;
     spaceComplexity?: string;
     countryOfOrigin: string;
     determanistic?: string;
   }
-  const fields = compareAlgorithms(sampleData[0], sampleData[1]);
+  
   const [correctAlgorithm] = useState(() => {
     const randomIndex = Math.floor(Math.random() * sampleData.length);
     console.log("Chose %s", sampleData[randomIndex].name);

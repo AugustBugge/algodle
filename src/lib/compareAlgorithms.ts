@@ -2,8 +2,8 @@
 
 export interface Algorithm {
   name: string
-  Type: string
-  TimeComplexity: string
+  type: string
+  timeComplexity: string
   spaceComplexity?: string
   countryOfOrigin: string
   determanistic?: string
@@ -27,11 +27,11 @@ function normalize(str: string | undefined) {
 export function compareAlgorithms(guess: Algorithm, correct: Algorithm): AlgorithmField[] {
   const fields: { key: keyof Algorithm; label: string }[] = [
     { key: "name", label: "name" },
-    { key: "Type", label: "Type" },
-    { key: "TimeComplexity", label: "Time" },
-    { key: "spaceComplexity", label: "Space" },
-    { key: "countryOfOrigin", label: "Origin" },
-    { key: "determanistic", label: "Deterministic" },
+    { key: "type", label: "type" },
+    { key: "timeComplexity", label: "time" },
+    { key: "spaceComplexity", label: "space" },
+    { key: "countryOfOrigin", label: "origin" },
+    { key: "determanistic", label: "deterministic" },
   ]
 
   return fields.map(({ key, label }) => {
