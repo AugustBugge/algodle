@@ -110,5 +110,13 @@ export function AlgorithmGuesser() {
     const isCorrect = checkAlgorithmGuess(guess, correctAlgorithm.name);
     alert(isCorrect ? "✅ Correct!" : "❌ Try again!");
   };
-  return <AlgorithmCombobox guess={handleGuess} items = {map sampleData} />;
+  return (
+    <AlgorithmCombobox
+      guess={handleGuess}
+      items={sampleData.map((item) => ({
+        label: item.name,
+        value: item.name,
+      }))}
+    />
+  );
 }
