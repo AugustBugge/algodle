@@ -5,9 +5,10 @@ import { ArrowUp, ArrowDown } from "lucide-react";
 
 interface AlgorithmGuessRowProps {
   fields: readonly AlgorithmField[];
+  showHeaders?: boolean;
 }
 
-export function AlgorithmGuessRow({ fields }: AlgorithmGuessRowProps) {
+export function AlgorithmGuessRow({ fields, showHeaders = false }: AlgorithmGuessRowProps) {
   const stateColors: Record<FieldState, string> = {
     correct: "bg-green-500 text-stone-50 border-green-600",
     partial: "bg-yellow-400 text-stone-50 border-yellow-500",
@@ -17,30 +18,41 @@ export function AlgorithmGuessRow({ fields }: AlgorithmGuessRowProps) {
   };
 
   return (
-    <div className="grid grid-cols-6 gap-2 w-full max-w-3xl">
-      {fields.map((f, i) => (
-        <Card
-          key={i}
-          className={cn(
-            "flex flex-col items-center justify-center p-2 text-center text-sm font-medium border rounded-xl h-24",
-            f.state ? stateColors[f.state] : "bg-gray-100 text-gray-800"
-          )}
-        >
-          <div className="break-words text-center">
-            {f.value}{" "}
-            {f.state === "better" ? (
-              <ArrowUp />
-            ) : f.state === "worse" ? (
-              <ArrowDown />
-            ) : (
-              ""
+    <div className="w-full max-w-3xl">
+      {/* Header Row */}
+      {showHeaders && (
+        <div className="grid grid-cols-6 gap-2 mb-1 text-sm font-semibold text-center text-muted-foreground">
+          {fields.map((f, i) => (
+            <div key={`header-${i}`} className="truncate">
+              {f.label}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Guess Cards */}
+      <div className="grid grid-cols-6 gap-2">
+        {fields.map((f, i) => (
+          <Card
+            key={i}
+            className={cn(
+              "flex flex-col items-center justify-center p-2 text-center text-sm font-medium border rounded-xl h-24",
+              f.state ? stateColors[f.state] : "bg-gray-100 text-gray-800"
             )}
-          </div>
-          <div className="text-xs text-muted-foreground font-normal">
-            {f.label}
-          </div>
-        </Card>
-      ))}
+          >
+            <div className="break-words text-center">
+              {f.value}{" "}
+              {f.state === "better" ? (
+                <ArrowUp />
+              ) : f.state === "worse" ? (
+                <ArrowDown />
+              ) : (
+                ""
+              )}
+            </div>
+          </Card>
+        ))}
+      </div>
     </div>
   );
 }

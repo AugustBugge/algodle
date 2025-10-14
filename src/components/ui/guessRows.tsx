@@ -11,9 +11,6 @@ interface GuessRowsProps {
   correct: Algorithm;
   guesses: Algorithm[];
   className?: string;
-  /**
-   * Optional: render a small label above each row (e.g., "Guess 1")
-   */
   showRowLabels?: boolean;
 }
 
@@ -36,7 +33,8 @@ export function GuessRows({
                 Guess {idx + 1}: {guess.name || "—"}
               </div>
             )}
-            <GuessCard guess={guess} answer={correct} />
+            {/* Show headers only for the first row */}
+            <GuessCard guess={guess} answer={correct} showHeaders={idx === 0} />
           </div>
         );
       })}
