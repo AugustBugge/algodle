@@ -1,39 +1,38 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Check, ChevronsUpDown } from "lucide-react"
+import * as React from "react";
+import { Check } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input";
 import {
   Command,
   CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command"
+} from "@/components/ui/command";
 import {
   Popover,
   PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
-import { cn } from "@/lib/utils"
+  PopoverAnchor,
+} from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 
 export type ComboItem = {
-  value: string
-  label: string
-  aliases?: string[] // optional: for extra search terms
-}
+  value: string;
+  label: string;
+  aliases?: string[]; // optional: for extra search terms
+};
 
 type AlgorithmComboboxProps = {
-  items: ComboItem[]
-  value?: string
-  placeholder?: string
-  emptyText?: string
-  onValueChange?: (value: string) => void
-  className?: string
-  guess : (value: string) => void
-}
+  items: ComboItem[];
+  value?: string;
+  placeholder?: string;
+  emptyText?: string;
+  onValueChange?: (value: string) => void;
+  className?: string;
+  guess: (value: string) => void;
+};
 
 export function AlgorithmCombobox({
   items,
@@ -44,64 +43,123 @@ export function AlgorithmCombobox({
   className,
   guess,
 }: AlgorithmComboboxProps) {
-  const [open, setOpen] = React.useState(false)
-  const [internalValue, setInternalValue] = React.useState(value ?? "")
+  const [open, setOpen] = React.useState(false);
+  const [inputValue, setInputValue] = React.useState(value ?? "");
+  const [selectedValue, setSelectedValue] = React.useState(value ?? "");
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
-  // keep internal in sync when parent controls it
+  // Keep internal value in sync when parent controls it
   React.useEffect(() => {
-    if (value !== undefined) setInternalValue(value)
-  }, [value])
+    if (value !== undefined) {
+      setInputValue(value);
+      setSelectedValue(value);
+    }
+  }, [value]);
 
-  const selected = items.find(i => i.value === internalValue)
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setInputValue(newValue);
+    // Only open the popover if there is text in the input
+    if (newValue.trim().length > 0) {
+      setOpen(true);
+    } else {
+      setOpen(false);
+    }
+  };
 
   const handleSelect = (v: string) => {
-    setInternalValue(v)
-    onValueChange?.(v)
-    setOpen(false)
-    guess(v)
-  }
+    const item = items.find((item) => item.value === v);
+    if (item) {
+      setInputValue(item.label);
+      setSelectedValue(v);
+      onValueChange?.(v);
+      setOpen(false);
+      guess(v);
+      setInputValue("");
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (inputValue.trim()) {
+      // If we have filtered items and the dropdown is open, select the first one
+      if (open && filteredItems.length > 0) {
+        handleSelect(filteredItems[0].value);
+        return;
+      }
+
+      // Otherwise try exact match or submit as-is
+      const matchingItem = items.find(
+        (item) => item.label.toLowerCase() === inputValue.toLowerCase()
+      );
+      if (matchingItem) {
+        handleSelect(matchingItem.value);
+      } else {
+        guess(inputValue);
+      }
+    }
+    setOpen(false);
+  };
+
+  // This ensures we don't lose filtering when typing
+  const filteredItems = React.useMemo(
+    () =>
+      items.filter((item) =>
+        item.label.toLowerCase().includes(inputValue.toLowerCase())
+      ),
+    [items, inputValue]
+  );
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className={cn("w-[280px] justify-between", className)}
-        >
-          {selected ? selected.label : <span className="text-muted-foreground">{placeholder}</span>}
-          <ChevronsUpDown className="ml-2 h-4 w-4 opacity-50" />
-        </Button>
-      </PopoverTrigger>
+    <form onSubmit={handleSubmit}>
+      <div className="relative">
+        <Input
+          ref={inputRef}
+          value={inputValue}
+          onChange={handleInputChange}
+          placeholder={placeholder}
+          className={cn("w-[280px]", className)}
+          onFocus={() => {
+            if (inputValue.trim().length > 0 && filteredItems.length > 0) {
+              setOpen(true);
+            }
+          }}
+        />
 
-      <PopoverContent className="w-[280px] p-0">
-        <Command>
-          <CommandInput placeholder="Search algorithms..." autoFocus />
-          <CommandList>
-            <CommandEmpty>{emptyText}</CommandEmpty>
-            <CommandGroup>
-              {items.map(item => (
-                <CommandItem
-                  key={item.value}
-                  value={item.label}
-                  // Put aliases in the item text so they’re searchable
-                  keywords={item.aliases}
-                  onSelect={() => handleSelect(item.value)}
-                >
-                  <Check
-                    className={cn(
-                      "mr-2 h-4 w-4",
-                      item.value === internalValue ? "opacity-100" : "opacity-0"
-                    )}
-                  />
-                  <span className="truncate">{item.label}</span>
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
-  )
+        {open && filteredItems.length > 0 && (
+          <div className="absolute z-50 w-[280px] mt-1 rounded-md border bg-popover p-0 text-popover-foreground shadow-md">
+            <Command className="w-full">
+              <CommandList>
+                <CommandEmpty>{emptyText}</CommandEmpty>
+                <CommandGroup>
+                  {filteredItems.map((item) => (
+                    <CommandItem
+                      key={item.value}
+                      value={item.label}
+                      keywords={item.aliases}
+                      onSelect={() => {
+                        handleSelect(item.value);
+                      }}
+                      className="cursor-pointer"
+                    >
+                      <Check
+                        className={cn(
+                          "mr-2 h-4 w-4",
+                          item.value === selectedValue
+                            ? "opacity-100"
+                            : "opacity-0"
+                        )}
+                      />
+                      <span className="truncate">{item.label}</span>
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </div>
+        )}
+      </div>
+    </form>
+  );
 }
