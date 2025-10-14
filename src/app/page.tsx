@@ -1,7 +1,19 @@
+"use client"
 import { Button } from "@/components/ui/button";
 import { InputWithButton } from "@/components/ui/inputWithButton";
 
+
+
 export default function Home() {
+  
+  const correctAlgorithm = "Dijkstra's algorithm"
+
+  const handleGuess = (guess: string) => {
+    const isCorrect = checkAlgorithmGuess(guess, correctAlgorithm)
+    alert(isCorrect ? "✅ Correct!" : "❌ Try again!")
+  }
+
+
   return (
     <main className="min-h-dvh flex items-center justify-center">
       <div className="space-y-4 text-center">
@@ -10,6 +22,7 @@ export default function Home() {
         <Button>It works</Button>
         <Button> It sure does </Button>
         <InputWithButton />
+        <InputWithButton onGuess={handleGuess} />
       </div>
     </main>
   );
