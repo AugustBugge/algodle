@@ -3,6 +3,8 @@ import { useState } from "react";
 import { checkAlgorithmGuess } from "@/lib/checkGuess";
 import { InputWithButton } from "@/components/ui/inputWithButton";
 import { AlgorithmCombobox } from "./algorithm-combobox";
+import { AlgorithmGuessRow } from "../AlgorithmGuessRow";
+import { compareAlgorithms } from "@/lib/compareAlgorithms";
 
 const sampleData = [
   {
@@ -94,11 +96,10 @@ export function AlgorithmGuesser() {
     Type: string;
     TimeComplexity: string;
     spaceComplexity?: string;
-    SpaceComplexity?: string;
     countryOfOrigin: string;
     determanistic?: string;
-    deterministic?: string;
   }
+  const fields = compareAlgorithms(sampleData[0], sampleData[1]);
 
   const [correctAlgorithm] = useState(() => {
     const randomIndex = Math.floor(Math.random() * sampleData.length);
@@ -111,12 +112,14 @@ export function AlgorithmGuesser() {
     alert(isCorrect ? "✅ Correct!" : "❌ Try again!");
   };
   return (
-    <AlgorithmCombobox
+    <div><AlgorithmCombobox
       guess={handleGuess}
       items={sampleData.map((item) => ({
         label: item.name,
         value: item.name,
       }))}
     />
+    <AlgorithmGuessRow fields={fields}/></div>
+    
   );
 }
