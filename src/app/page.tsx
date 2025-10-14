@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 
 import { AlgorithmGuesser } from "@/components/ui/algorithmGuesser";
 
-
 export default function Home() {
   const correctAlgorithm = "Dijkstra's algorithm";
 
