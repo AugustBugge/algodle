@@ -92,18 +92,23 @@ const categories = [
 ];
 
 export function AlgorithmGuesser() {
+  const [algorithms, setAlgorithms] = useState<Algorithm[]>(sampleData);
   const [correctAlgorithm] = useState<Algorithm>(() => {
     const randomIndex = Math.floor(Math.random() * sampleData.length);
-    console.log("Chose %s", sampleData[randomIndex].name);
-    return sampleData[randomIndex];
+    console.log("Chose %s", algorithms[randomIndex].name);
+    return algorithms[randomIndex];
   });
+  
   const [guesses, setGuesses] = useState<Algorithm[]>([]);
   const [guessedCorrect, setGuessedCorret] = useState(false);
 
   const handleGuess = (guess: string) => {
     if (guessedCorrect) return;
     const isCorrect = checkAlgorithmGuess(guess, correctAlgorithm.name);
-    const match = sampleData.find((x) => x.name === guess);
+    const match = algorithms.find((x) => x.name === guess);
+
+    setAlgorithms((prev) => prev.filter((x) => x.name !== guess));
+
     setGuesses((prev) => (match ? [match, ...prev] : prev));
     if (isCorrect) {
       setGuessedCorret(true);
@@ -115,7 +120,7 @@ export function AlgorithmGuesser() {
       {!guessedCorrect && (
         <AlgorithmCombobox
           guess={handleGuess}
-          items={sampleData.map((item) => ({
+          items={algorithms.map((item) => ({
             label: item.name,
             value: item.name,
           }))}
