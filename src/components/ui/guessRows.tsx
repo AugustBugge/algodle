@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { AlgorithmGuessRow } from "@/components/ui/AlgorithmGuessRow";
 import { compareAlgorithms } from "@/lib/compareAlgorithms";
 import { Algorithm } from "@/lib/types";
+import { GuessCard } from "./buildCard";
 
 interface GuessRowsProps {
   correct: Algorithm;
@@ -35,7 +36,7 @@ export function GuessRows({
                 Guess {idx + 1}: {guess.name || "—"}
               </div>
             )}
-            <AlgorithmGuessRow fields={fields} />
+            <GuessCard guess={guess} answer={correct} />
           </div>
         );
       })}

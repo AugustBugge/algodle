@@ -1,8 +1,11 @@
 import { relation } from "./compareComplexity";
 import { Algorithm, FieldState } from "./types";
 
-const relToState = (r: ReturnType<typeof relation>): FieldState =>
-  r === "same" ? "correct" : "partial"; // better/worse → partial
+const relToState = (r: ReturnType<typeof relation>): FieldState => {
+  if (r === "same") return "correct";
+  else if (r === "better") return "better";
+  else return "worse";
+};
 
 export function buildFields(guess: Algorithm, answer: Algorithm) {
   const boolToState = (ok: boolean): FieldState => (ok ? "correct" : "wrong");

@@ -7,7 +7,7 @@ export interface Algorithm {
   determanistic: "Yes" | "No";
 }
 
-export type FieldState = "correct" | "partial" | "wrong";
+export type FieldState = "correct" | "partial" | "wrong" | "better" | "worse";
 
 export interface AlgorithmField {
   label: string;
