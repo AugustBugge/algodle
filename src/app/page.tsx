@@ -1,18 +1,15 @@
-"use client"
+"use client";
 import { Button } from "@/components/ui/button";
 import { InputWithButton } from "@/components/ui/inputWithButton";
-
-
+import { checkAlgorithmGuess } from "@/lib/checkGuess";
 
 export default function Home() {
-  
-  const correctAlgorithm = "Dijkstra's algorithm"
+  const correctAlgorithm = "Dijkstra's algorithm";
 
   const handleGuess = (guess: string) => {
-    const isCorrect = checkAlgorithmGuess(guess, correctAlgorithm)
-    alert(isCorrect ? "✅ Correct!" : "❌ Try again!")
-  }
-
+    const isCorrect = checkAlgorithmGuess(guess, correctAlgorithm);
+    alert(isCorrect ? "✅ Correct!" : "❌ Try again!");
+  };
 
   return (
     <main className="min-h-dvh flex items-center justify-center">
@@ -21,7 +18,6 @@ export default function Home() {
         <p className="text-muted-foreground">Next.js + Tailwind + shadcn/ui</p>
         <Button>It works</Button>
         <Button> It sure does </Button>
-        <InputWithButton />
         <InputWithButton onGuess={handleGuess} />
       </div>
     </main>
