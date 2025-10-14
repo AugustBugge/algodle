@@ -127,7 +127,7 @@ export function AlgorithmGuesser() {
           width={window.innerWidth}
           height={window.innerHeight}
           recycle={false}
-          numberOfPieces={500}
+          numberOfPieces={10000}
         />
       )}
       {!guessedCorrect && (
