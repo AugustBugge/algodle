@@ -15,9 +15,9 @@ interface AlgorithmGuessRowProps {
 
 export function AlgorithmGuessRow({ fields }: AlgorithmGuessRowProps) {
   const stateColors: Record<FieldState, string> = {
-    correct: "bg-green-500 text-white border-green-600",
-    partial: "bg-yellow-400 text-black border-yellow-500",
-    wrong: "bg-gray-200 text-gray-800 border-gray-300",
+    correct: "bg-green-500 text-stone-50 border-green-600",
+    partial: "bg-yellow-400 text-stone-50 border-yellow-500",
+    wrong: "bg-red-600 text-stone-50 border-gray-300",
   }
 
   return (
