@@ -75,6 +75,7 @@ export function AlgorithmCombobox({
       onValueChange?.(v);
       setOpen(false);
       guess(v);
+      setInputValue("");
     }
   };
 
