@@ -1,6 +1,6 @@
-// buildFields.ts
-import { relation } from "./complexity";
+import { relation } from "./compareComplexity";
 
+// buildFields.ts
 type FieldState = "correct" | "partial" | "wrong";
 
 type Algo = {
