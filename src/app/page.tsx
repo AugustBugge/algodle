@@ -1,7 +1,8 @@
 "use client";
+import { AlgorithmGuesser } from "@/components/ui/algorithmGuesser";
 import { Button } from "@/components/ui/button";
 
-import { AlgorithmGuesser } from "@/components/ui/algorithmGuesser";
+
 
 
 export default function Home() {
