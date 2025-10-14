@@ -80,7 +80,15 @@ export function AlgorithmCombobox({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
     if (inputValue.trim()) {
+      // If we have filtered items and the dropdown is open, select the first one
+      if (open && filteredItems.length > 0) {
+        handleSelect(filteredItems[0].value);
+        return;
+      }
+
+      // Otherwise try exact match or submit as-is
       const matchingItem = items.find(
         (item) => item.label.toLowerCase() === inputValue.toLowerCase()
       );
