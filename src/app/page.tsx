@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { InputWithButton } from "@/components/ui/inputWithButton";
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
         <p className="text-muted-foreground">Next.js + Tailwind + shadcn/ui</p>
         <Button>It works</Button>
         <Button> It sure does </Button>
+        <InputWithButton />
       </div>
     </main>
   );
