@@ -1,30 +1,17 @@
 // src/lib/compareAlgorithms.ts
-
-export interface Algorithm {
-  name: string
-  type: string
-  timeComplexity: string
-  spaceComplexity?: string
-  countryOfOrigin: string
-  determanistic?: string
-}
-
-export type FieldState = "correct" | "partial" | "wrong"
-
-export interface AlgorithmField {
-  label: string
-  value: string
-  state: FieldState
-}
+import { Algorithm, FieldState, AlgorithmField } from "./types";
 
 function normalize(str: string | undefined) {
-  return str?.trim().toLowerCase() ?? ""
+  return str?.trim().toLowerCase() ?? "";
 }
 
 /**
  * Compare two algorithms and return data for AlgorithmGuessRow.
  */
-export function compareAlgorithms(guess: Algorithm, correct: Algorithm): AlgorithmField[] {
+export function compareAlgorithms(
+  guess: Algorithm,
+  correct: Algorithm
+): AlgorithmField[] {
   const fields: { key: keyof Algorithm; label: string }[] = [
     { key: "name", label: "name" },
     { key: "type", label: "type" },
@@ -32,21 +19,21 @@ export function compareAlgorithms(guess: Algorithm, correct: Algorithm): Algorit
     { key: "spaceComplexity", label: "space" },
     { key: "countryOfOrigin", label: "origin" },
     { key: "determanistic", label: "deterministic" },
-  ]
+  ];
 
   return fields.map(({ key, label }) => {
-    const gVal = normalize(guess[key])
-    const cVal = normalize(correct[key])
+    const gVal = normalize(guess[key]);
+    const cVal = normalize(correct[key]);
 
-    let state: FieldState = "wrong"
+    let state: FieldState = "wrong";
 
-    if (gVal === cVal && gVal !== "") state = "correct"
-    else if (gVal && cVal && cVal.includes(gVal.slice(0, 3))) state = "partial"
+    if (gVal === cVal && gVal !== "") state = "correct";
+    else if (gVal && cVal && cVal.includes(gVal.slice(0, 3))) state = "partial";
 
     return {
       label,
       value: guess[key] ?? "—",
       state,
-    }
-  })
+    };
+  });
 }

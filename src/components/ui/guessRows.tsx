@@ -1,27 +1,19 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
-import { AlgorithmGuessRow } from "@/components/ui/AlgorithmGuessRow"
-import { compareAlgorithms } from "@/lib/compareAlgorithms"
-
-export interface Algorithm {
-  name: string
-  type: string
-  timeComplexity: string
-  spaceComplexity?: string
-  countryOfOrigin: string
-  determanistic?: string // keeping your original spelling
-}
+import * as React from "react";
+import { cn } from "@/lib/utils";
+import { AlgorithmGuessRow } from "@/components/ui/AlgorithmGuessRow";
+import { compareAlgorithms } from "@/lib/compareAlgorithms";
+import { Algorithm } from "@/lib/types";
 
 interface GuessRowsProps {
-  correct: Algorithm
-  guesses: Algorithm[]
-  className?: string
+  correct: Algorithm;
+  guesses: Algorithm[];
+  className?: string;
   /**
    * Optional: render a small label above each row (e.g., "Guess 1")
    */
-  showRowLabels?: boolean
+  showRowLabels?: boolean;
 }
 
 export function GuessRows({
@@ -30,12 +22,12 @@ export function GuessRows({
   className,
   showRowLabels = false,
 }: GuessRowsProps) {
-  if (!guesses?.length) return null
+  if (!guesses?.length) return null;
 
   return (
     <div className={cn("w-full space-y-3", className)}>
       {guesses.map((guess, idx) => {
-        const fields = compareAlgorithms(guess, correct)
+        const fields = compareAlgorithms(guess, correct);
         return (
           <div key={`${guess.name}-${idx}`} className="space-y-1">
             {showRowLabels && (
@@ -45,8 +37,8 @@ export function GuessRows({
             )}
             <AlgorithmGuessRow fields={fields} />
           </div>
-        )
+        );
       })}
     </div>
-  )
+  );
 }

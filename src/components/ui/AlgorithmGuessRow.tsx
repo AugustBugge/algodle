@@ -1,16 +1,9 @@
-import { Card } from "@/components/ui/card"
-import { cn } from "@/lib/utils"
-
-type FieldState = "correct" | "partial" | "wrong"
-
-interface AlgorithmField {
-  label: string
-  value: string
-  state?: FieldState
-}
+import { Card } from "@/components/ui/card";
+import { AlgorithmField, FieldState } from "@/lib/types";
+import { cn } from "@/lib/utils";
 
 interface AlgorithmGuessRowProps {
-  fields: AlgorithmField[]
+  fields: AlgorithmField[];
 }
 
 export function AlgorithmGuessRow({ fields }: AlgorithmGuessRowProps) {
@@ -18,7 +11,7 @@ export function AlgorithmGuessRow({ fields }: AlgorithmGuessRowProps) {
     correct: "bg-green-500 text-stone-50 border-green-600",
     partial: "bg-yellow-400 text-stone-50 border-yellow-500",
     wrong: "bg-red-600 text-stone-50 border-gray-300",
-  }
+  };
 
   return (
     <div className="grid grid-cols-6 gap-2 w-full max-w-3xl">
@@ -31,9 +24,11 @@ export function AlgorithmGuessRow({ fields }: AlgorithmGuessRowProps) {
           )}
         >
           <div className="truncate">{f.value}</div>
-          <div className="text-xs text-muted-foreground font-normal">{f.label}</div>
+          <div className="text-xs text-muted-foreground font-normal">
+            {f.label}
+          </div>
         </Card>
       ))}
     </div>
-  )
+  );
 }

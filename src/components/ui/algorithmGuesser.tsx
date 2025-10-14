@@ -6,8 +6,9 @@ import { AlgorithmCombobox } from "./algorithm-combobox";
 import { AlgorithmGuessRow } from "./AlgorithmGuessRow";
 import { compareAlgorithms } from "@/lib/compareAlgorithms";
 import { GuessRows } from "./guessRows";
+import { Algorithm } from "@/lib/types";
 
-const sampleData = [
+const sampleData: Algorithm[] = [
   {
     name: "Quicksort",
     type: "Sorting Algorithm",
@@ -59,8 +60,7 @@ const sampleData = [
   {
     name: "Dijkstra's Algorithm",
     type: "Graph Algorithm",
-    timeComplexity:
-      "O(E + V log V)",
+    timeComplexity: "O(E + V log V)",
     spaceComplexity: "O(V)",
     countryOfOrigin: "Netherlands",
     determanistic: "Yes",
@@ -91,48 +91,37 @@ const categories = [
   "determanistic?",
 ];
 
-
-
 export function AlgorithmGuesser() {
-  interface Algorithm {
-    name: string;
-    type: string;
-    timeComplexity: string;
-    spaceComplexity?: string;
-    countryOfOrigin: string;
-    determanistic?: string;
-  }
-  
-  const [correctAlgorithm] = useState(() => {
+  const [correctAlgorithm] = useState<Algorithm>(() => {
     const randomIndex = Math.floor(Math.random() * sampleData.length);
     console.log("Chose %s", sampleData[randomIndex].name);
     return sampleData[randomIndex];
   });
-const [guesses, setGuesses] = useState<Algorithm[]>([]);
-const [guessedCorrect, setGuessedCorret] = useState(false);
+  const [guesses, setGuesses] = useState<Algorithm[]>([]);
+  const [guessedCorrect, setGuessedCorret] = useState(false);
 
   const handleGuess = (guess: string) => {
-    if( guessedCorrect) return;
+    if (guessedCorrect) return;
     const isCorrect = checkAlgorithmGuess(guess, correctAlgorithm.name);
-    const match = sampleData.find(x => x.name === guess);
-  setGuesses(prev => (match ? [match, ...prev] : prev));
+    const match = sampleData.find((x) => x.name === guess);
+    setGuesses((prev) => (match ? [match, ...prev] : prev));
     if (isCorrect) {
       setGuessedCorret(true);
     }
     //alert(isCorrect ? "✅ Correct!" : "❌ Try again!");
   };
   return (
-    
     <div>
-       {!guessedCorrect && (<AlgorithmCombobox
-      guess={handleGuess}
-      items={sampleData.map((item) => ({
-        label: item.name,
-        value: item.name,
-      }))}
-    />)}
-    <GuessRows correct={correctAlgorithm} guesses={guesses}/>
+      {!guessedCorrect && (
+        <AlgorithmCombobox
+          guess={handleGuess}
+          items={sampleData.map((item) => ({
+            label: item.name,
+            value: item.name,
+          }))}
+        />
+      )}
+      <GuessRows correct={correctAlgorithm} guesses={guesses} />
     </div>
-    
   );
 }
