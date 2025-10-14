@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { checkAlgorithmGuess } from "@/lib/checkGuess";
 import { InputWithButton } from "@/components/ui/inputWithButton";
+import { AlgorithmCombobox } from "./algorithm-combobox";
 
 const sampleData = [
   {
@@ -109,5 +110,5 @@ export function AlgorithmGuesser() {
     const isCorrect = checkAlgorithmGuess(guess, correctAlgorithm.name);
     alert(isCorrect ? "✅ Correct!" : "❌ Try again!");
   };
-  return <InputWithButton onGuess={handleGuess} />;
+  return <AlgorithmCombobox guess={handleGuess} items = {map sampleData} />;
 }
