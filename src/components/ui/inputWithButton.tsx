@@ -1,22 +1,22 @@
-"use client"
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+"use client";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 interface InputWithButtonProps {
-  onGuess: (guess: string) => void
+  onGuess: (guess: string) => void;
 }
 
 export function InputWithButton({ onGuess }: InputWithButtonProps) {
-  const [guess, setGuess] = useState("")
+  const [guess, setGuess] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     if (guess.trim() !== "") {
-      onGuess(guess.trim())
-      setGuess("") // optional: clear after submit
+      onGuess(guess.trim());
+      setGuess(""); // optional: clear after submit
     }
-  }
+  };
 
   return (
     <form
@@ -33,6 +33,5 @@ export function InputWithButton({ onGuess }: InputWithButtonProps) {
         Guess
       </Button>
     </form>
-  )
+  );
 }
-

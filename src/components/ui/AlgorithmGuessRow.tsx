@@ -8,7 +8,10 @@ interface AlgorithmGuessRowProps {
   showHeaders?: boolean;
 }
 
-export function AlgorithmGuessRow({ fields, showHeaders = false }: AlgorithmGuessRowProps) {
+export function AlgorithmGuessRow({
+  fields,
+  showHeaders = false,
+}: AlgorithmGuessRowProps) {
   const stateColors: Record<FieldState, string> = {
     correct: "bg-green-500 text-stone-50 border-green-600",
     partial: "bg-yellow-400 text-stone-50 border-yellow-500",
@@ -40,16 +43,11 @@ export function AlgorithmGuessRow({ fields, showHeaders = false }: AlgorithmGues
               f.state ? stateColors[f.state] : "bg-gray-100 text-gray-800"
             )}
           >
-          <div className="flex flex-col items-center justify-center text-center break-words">
-             <span>{f.value}</span>
-            {f.state === "better" && (
-              <ArrowUp className="mt-1" size={16} />
-            )}
-            {f.state === "worse" && (
-              <ArrowDown className="mt-1" size={16} />
-            )}
-          </div>
-
+            <div className="flex flex-col items-center justify-center text-center break-words">
+              <span>{f.value}</span>
+              {f.state === "better" && <ArrowUp className="mt-1" size={16} />}
+              {f.state === "worse" && <ArrowDown className="mt-1" size={16} />}
+            </div>
           </Card>
         ))}
       </div>

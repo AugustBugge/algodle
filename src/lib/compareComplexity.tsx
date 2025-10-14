@@ -1,20 +1,22 @@
 // 1) Ordered classes (lower = better)
 export enum ComplexityClass {
-  CONSTANT = 0,      // O(1)
-  LOGARITHMIC = 1,   // O(log n)
-  SQRT = 2,          // O(sqrt n)  (rare but supported)
-  LINEAR = 3,        // O(n), O(V+E), O(V)
-  N_LOG_N = 4,       // O(n log n), O(V log V), O(E + V log V)
-  QUADRATIC = 5,     // O(n^2)
-  CUBIC = 6,         // O(n^3)
-  POLY = 7,          // O(n^k) for k>3 (fallback)
-  EXPONENTIAL = 8,   // O(c^n), O(2^n)
-  FACTORIAL = 9,     // O(n!)
+  CONSTANT = 0, // O(1)
+  LOGARITHMIC = 1, // O(log n)
+  SQRT = 2, // O(sqrt n)  (rare but supported)
+  LINEAR = 3, // O(n), O(V+E), O(V)
+  N_LOG_N = 4, // O(n log n), O(V log V), O(E + V log V)
+  QUADRATIC = 5, // O(n^2)
+  CUBIC = 6, // O(n^3)
+  POLY = 7, // O(n^k) for k>3 (fallback)
+  EXPONENTIAL = 8, // O(c^n), O(2^n)
+  FACTORIAL = 9, // O(n!)
   UNKNOWN = 99,
 }
 
 // 2) Normalize free-text to a class
-export function parseComplexity(input: string | undefined | null): ComplexityClass {
+export function parseComplexity(
+  input: string | undefined | null
+): ComplexityClass {
   if (!input) return ComplexityClass.UNKNOWN;
 
   // normalize: lowercase, strip spaces & "O(" ")" and commas
@@ -44,7 +46,8 @@ export function parseComplexity(input: string | undefined | null): ComplexityCla
   // pure tokens
   if (s === "1") return ComplexityClass.CONSTANT;
   if (s === "logn") return ComplexityClass.LOGARITHMIC;
-  if (s === "sqrt n" || s === "sqrtn" || s === "√n") return ComplexityClass.SQRT; // optional
+  if (s === "sqrt n" || s === "sqrtn" || s === "√n")
+    return ComplexityClass.SQRT; // optional
 
   // linear forms
   if (s === "n" || s === "v" || s === "e") return ComplexityClass.LINEAR;
@@ -58,7 +61,8 @@ export function parseComplexity(input: string | undefined | null): ComplexityCla
   if (/n\^\d+/.test(s)) return ComplexityClass.POLY;
 
   // exponential / factorial
-  if (/\d+\^n/.test(s) || /c\^n/.test(s) || s === "2^n") return ComplexityClass.EXPONENTIAL;
+  if (/\d+\^n/.test(s) || /c\^n/.test(s) || s === "2^n")
+    return ComplexityClass.EXPONENTIAL;
   if (/n!/.test(s)) return ComplexityClass.FACTORIAL;
 
   // last-resort heuristics for your dataset variants
@@ -75,13 +79,18 @@ export function compareComplexities(a: string, b: string): number {
   const cb = parseComplexity(b);
   if (ca === cb) return 0;
   // UNKNOWN ranks worst; anything beats UNKNOWN
-  if (ca === ComplexityClass.UNKNOWN && cb !== ComplexityClass.UNKNOWN) return 1;
-  if (cb === ComplexityClass.UNKNOWN && ca !== ComplexityClass.UNKNOWN) return -1;
+  if (ca === ComplexityClass.UNKNOWN && cb !== ComplexityClass.UNKNOWN)
+    return 1;
+  if (cb === ComplexityClass.UNKNOWN && ca !== ComplexityClass.UNKNOWN)
+    return -1;
   return ca < cb ? -1 : 1;
 }
 
 // 4) Friendly label
-export function relation(a: string, b: string): "better" | "same" | "worse" | "unknown" {
+export function relation(
+  a: string,
+  b: string
+): "better" | "same" | "worse" | "unknown" {
   const cmp = compareComplexities(a, b);
   if (cmp === -1) return "better";
   if (cmp === 0) return "same";

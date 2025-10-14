@@ -127,36 +127,36 @@ export function AlgorithmCombobox({
           }}
         />
 
-{open && filteredItems.length > 0 && (
-    <div
-      className="absolute left-0 top-full z-50 mt-1 w-[280px] rounded-md border bg-popover p-0 text-popover-foreground shadow-md"
-    >
-      <Command className="w-[280px]">
-        <CommandList>
-          <CommandEmpty>{emptyText}</CommandEmpty>
-          <CommandGroup>
-            {filteredItems.map((item) => (
-              <CommandItem
-                key={item.value}
-                value={item.label}
-                keywords={item.aliases}
-                onSelect={() => handleSelect(item.value)}
-                className="cursor-pointer"
-              >
-                <Check
-                  className={cn(
-                    "mr-2 h-4 w-4",
-                    item.value === selectedValue ? "opacity-100" : "opacity-0"
-                  )}
-                />
-                <span className="truncate">{item.label}</span>
-              </CommandItem>
-            ))}
-          </CommandGroup>
-        </CommandList>
-      </Command>
-    </div>
-  )}
+        {open && filteredItems.length > 0 && (
+          <div className="absolute left-0 top-full z-50 mt-1 w-[280px] rounded-md border bg-popover p-0 text-popover-foreground shadow-md">
+            <Command className="w-[280px]">
+              <CommandList>
+                <CommandEmpty>{emptyText}</CommandEmpty>
+                <CommandGroup>
+                  {filteredItems.map((item) => (
+                    <CommandItem
+                      key={item.value}
+                      value={item.label}
+                      keywords={item.aliases}
+                      onSelect={() => handleSelect(item.value)}
+                      className="cursor-pointer"
+                    >
+                      <Check
+                        className={cn(
+                          "mr-2 h-4 w-4",
+                          item.value === selectedValue
+                            ? "opacity-100"
+                            : "opacity-0"
+                        )}
+                      />
+                      <span className="truncate">{item.label}</span>
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </div>
+        )}
       </div>
     </form>
   );

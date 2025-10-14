@@ -98,7 +98,7 @@ export function AlgorithmGuesser() {
     console.log("Chose %s", algorithms[randomIndex].name);
     return algorithms[randomIndex];
   });
-  
+
   const [guesses, setGuesses] = useState<Algorithm[]>([]);
   const [guessedCorrect, setGuessedCorret] = useState(false);
 
