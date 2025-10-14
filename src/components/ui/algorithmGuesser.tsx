@@ -3,7 +3,7 @@ import { useState } from "react";
 import { checkAlgorithmGuess } from "@/lib/checkGuess";
 import { InputWithButton } from "@/components/ui/inputWithButton";
 import { AlgorithmCombobox } from "./algorithm-combobox";
-import { AlgorithmGuessRow } from "../AlgorithmGuessRow";
+import { AlgorithmGuessRow } from "./AlgorithmGuessRow";
 import { compareAlgorithms } from "@/lib/compareAlgorithms";
 import { GuessRows } from "./guessRows";
 
@@ -90,6 +90,7 @@ const categories = [
   "countryOfOrigin",
   "determanistic?",
 ];
+
 
 
 export function AlgorithmGuesser() {

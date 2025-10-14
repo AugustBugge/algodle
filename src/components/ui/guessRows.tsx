@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { cn } from "@/lib/utils"
-import { AlgorithmGuessRow } from "@/components/AlgorithmGuessRow"
+import { AlgorithmGuessRow } from "@/components/ui/AlgorithmGuessRow"
 import { compareAlgorithms } from "@/lib/compareAlgorithms"
 
 export interface Algorithm {
