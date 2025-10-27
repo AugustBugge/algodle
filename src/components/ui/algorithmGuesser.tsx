@@ -82,6 +82,14 @@ const sampleData: Algorithm[] = [
     countryOfOrigin: "United States",
     determanistic: "Yes",
   },
+  {
+    name: "Havel-Hakimi",
+    type: "Graph Algorithm",
+    timeComplexity: "N²",
+    spaceComplexity: "O(N)",
+    countryOfOrigin: "Czech Republic",
+    determanistic: "Yes",
+  },
 ];
 
 const categories = [
